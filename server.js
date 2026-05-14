@@ -1,5 +1,5 @@
 const express = require("express");
-const mysql = require("mysql");
+const mysql = require("mysql2");
 const cors = require("cors");
 const http = require("http");
 const { Server } = require("socket.io");
@@ -16,10 +16,14 @@ const server = http.createServer(app);
 const io = new Server(server, { cors: { origin: "*" }, });
 
 const db = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "gameapp",
+ host: "hi-bi-db.c3yuuqycknwi.ap-south-1.rds.amazonaws.com",
+user: "admin",
+password: "HIBI1234",
+database: "gameapp",
+port:3306,
+authPlugins: {
+  mysql_clear_password: () => () => Buffer.from("HIBI1234")
+},
 });
 
 let onlineUsers = {};
@@ -27,6 +31,7 @@ let otpStore = {};
 
 
 db.connect((err) => {
+  
   if (err) console.log(err);
   else console.log("MySQL Connected ✅");
 });
