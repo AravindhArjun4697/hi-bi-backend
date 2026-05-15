@@ -7,7 +7,15 @@ const axios = require("axios");
 const bcrypt = require("bcrypt");
 const app = express();
 const jwt = require("jsonwebtoken");
-app.use(cors());
+app.use(cors(
+  {
+  origin: [
+    "https://hi-bigame.online",
+    "https://www.hi-bigame.online"
+  ],
+  credentials: true
+}
+));
 app.use(express.json());
 const SECRET_KEY = "HIBI_SECRET_KEY";
 const ADMIN_SECRET_KEY = "admin_secret_key";
