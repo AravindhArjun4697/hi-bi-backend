@@ -25,7 +25,17 @@ const SECRET_KEY = "HIBI_SECRET_KEY";
 const ADMIN_SECRET_KEY = "admin_secret_key";
 const server = http.createServer(app);
 
-const io = new Server(server, { cors: { origin: "*" }, });
+// const io = new Server(server, { cors: { origin: "*" }, });
+
+const io = new Server(server, {
+  cors: {
+    origin: [
+      "https://hi-bigame.online",
+      "https://www.hi-bigame.online"
+    ],
+    methods: ["GET", "POST"]
+  }
+});
 
 const db = mysql.createConnection({
  host: "hi-bi-db.c3yuuqycknwi.ap-south-1.rds.amazonaws.com",
