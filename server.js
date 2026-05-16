@@ -5,8 +5,11 @@ const http = require("http");
 const { Server } = require("socket.io");
 const axios = require("axios");
 const bcrypt = require("bcrypt");
-const app = express();
 const jwt = require("jsonwebtoken");
+const app = express();
+app.get("/", (req, res) => {
+  res.send("API Running Successfully");
+});
 app.use(cors(
   {
   origin: [
