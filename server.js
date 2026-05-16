@@ -14,7 +14,8 @@ app.use(cors(
   {
   origin: [
     "https://hi-bigame.online",
-    "https://www.hi-bigame.online"
+    "https://www.hi-bigame.online",
+    "https://api.hi-bigame.online",
   ],
   credentials: true
 }
