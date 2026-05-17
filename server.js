@@ -952,16 +952,30 @@ io.on("connection", (socket) => {
     let waitingPlayer =
       waitingPlayers[amount];
 
-    const alreadyPlaying =
-      Object.values(games).find(
-        (game) =>
-          game.players.some(
-            (p) =>
-              p.userId === userId
-          )
-      );
+    // const alreadyPlaying =
+    //   Object.values(games).find(
+    //     (game) =>
+    //       game.players.some(
+    //         (p) =>
+    //           p.userId === userId
+    //       )
+    //   );
 
-    if (alreadyPlaying) return;
+    // if (alreadyPlaying) return;
+    const alreadyPlaying =
+  Object.values(games).find(
+    (game) =>
+      !game.finished &&
+      game.players.some(
+        (p) =>
+          p.userId === userId
+      )
+  );
+
+if (alreadyPlaying) {
+  socket.emit("alreadyPlaying");
+  return;
+}
 
     if (
       waitingPlayers[amount] &&
