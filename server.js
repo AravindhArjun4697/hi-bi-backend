@@ -31,11 +31,13 @@ const io = new Server(server, {
   cors: {
     origin: [
       "https://hi-bigame.online",
-      "https://www.hi-bigame.online"
+      "https://www.hi-bigame.online",
+      "https://api.hi-bigame.online"
     ],
-    methods: ["GET", "POST"]
+    methods: ["GET", "POST"],
+    credentials: true
   }
-});
+})
 
 const db = mysql.createConnection({
  host: "hi-bi-db.c3yuuqycknwi.ap-south-1.rds.amazonaws.com",
