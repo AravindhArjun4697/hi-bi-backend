@@ -15,7 +15,7 @@ app.use(cors(
   origin: [
     "https://hi-bigame.online",
     "https://www.hi-bigame.online",
-    "https://api.hi-bigame.online",
+   
   ],
   credentials: true
 }
@@ -32,7 +32,7 @@ const io = new Server(server, {
     origin: [
       "https://hi-bigame.online",
       "https://www.hi-bigame.online",
-      "https://api.hi-bigame.online"
+     
     ],
     methods: ["GET", "POST"],
     credentials: true
