@@ -12,13 +12,13 @@ app.get("/", (req, res) => {
 });
 app.use(cors(
   {
-  origin: [
-    "https://hi-bigame.online",
-    "https://www.hi-bigame.online",
-   
-  ],
-  credentials: true
-}
+    origin: [
+      "https://hi-bigame.online",
+      "https://www.hi-bigame.online",
+
+    ],
+    credentials: true
+  }
 ));
 app.use(express.json());
 const SECRET_KEY = "HIBI_SECRET_KEY";
@@ -32,7 +32,7 @@ const io = new Server(server, {
     origin: [
       "https://hi-bigame.online",
       "https://www.hi-bigame.online",
-     
+
     ],
     methods: ["GET", "POST"],
     credentials: true
@@ -40,14 +40,14 @@ const io = new Server(server, {
 })
 
 const db = mysql.createConnection({
- host: "hi-bi-db.c3yuuqycknwi.ap-south-1.rds.amazonaws.com",
-user: "admin",
-password: "HIBI1234",
-database: "gameapp",
-port:3306,
-authPlugins: {
-  mysql_clear_password: () => () => Buffer.from("HIBI1234")
-},
+  host: "hi-bi-db.c3yuuqycknwi.ap-south-1.rds.amazonaws.com",
+  user: "admin",
+  password: "HIBI1234",
+  database: "gameapp",
+  port: 3306,
+  authPlugins: {
+    mysql_clear_password: () => () => Buffer.from("HIBI1234")
+  },
 });
 
 let onlineUsers = {};
@@ -55,7 +55,7 @@ let otpStore = {};
 
 
 db.connect((err) => {
-  
+
   if (err) console.log(err);
   else console.log("MySQL Connected ✅");
 });
@@ -963,19 +963,19 @@ io.on("connection", (socket) => {
 
     // if (alreadyPlaying) return;
     const alreadyPlaying =
-  Object.values(games).find(
-    (game) =>
-      !game.finished &&
-      game.players.some(
-        (p) =>
-          p.userId === userId
-      )
-  );
+      Object.values(games).find(
+        (game) =>
+          !game.finished &&
+          game.players.some(
+            (p) =>
+              p.userId === userId
+          )
+      );
 
-if (alreadyPlaying) {
-  socket.emit("alreadyPlaying");
-  return;
-}
+    if (alreadyPlaying) {
+      socket.emit("alreadyPlaying");
+      return;
+    }
 
     if (
       waitingPlayers[amount] &&
@@ -1113,16 +1113,28 @@ if (alreadyPlaying) {
             games[gameId] = {
               players: [
                 {
-                  socket:
-                    waitingPlayer.socket,
-                  userId:
-                    waitingPlayer.userId
+                  socket: waitingPlayer.socket,
+                  userId: waitingPlayer.userId,
+                  symbol: "X"
                 },
                 {
                   socket: socket,
-                  userId: userId
+                  userId: userId,
+                  symbol: "O"
                 }
               ],
+              // players: [
+              //   {
+              //     socket:
+              //       waitingPlayer.socket,
+              //     userId:
+              //       waitingPlayer.userId
+              //   },
+              //   {
+              //     socket: socket,
+              //     userId: userId
+              //   }
+              // ],
               board:
                 Array(9).fill(null),
               currentTurn: "X",
@@ -1281,7 +1293,9 @@ if (alreadyPlaying) {
 
     for (let userId in onlineUsers) {
 
-      if (onlineUsers[userId] === socket.id) {
+      // if (onlineUsers[userId] === socket.id) 
+
+      if (onlineUsers[userId]?.socketId === socket.id) {
 
         delete onlineUsers[userId];
         io.emit(
